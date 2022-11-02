@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -33,6 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Message.findByContent", query = "SELECT m FROM Message m WHERE m.content = :content")})
 public class Message implements Serializable {
 
+
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,11 +44,11 @@ public class Message implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private int userId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "group_id")
+    @JoinColumn(name = "group_id", referencedColumnName = "id")
     private int groupId;
     @Basic(optional = false)
     @NotNull
@@ -123,5 +126,7 @@ public class Message implements Serializable {
     public String toString() {
         return "com.ntv.pojo.Message[ id=" + id + " ]";
     }
+
+  
     
 }

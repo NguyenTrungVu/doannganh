@@ -11,8 +11,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -23,14 +25,20 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author inmac
  */
 @Entity
-@Table(name = "group")
+@Table(name = "groups")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Group1.findAll", query = "SELECT g FROM Group1 g"),
-    @NamedQuery(name = "Group1.findById", query = "SELECT g FROM Group1 g WHERE g.id = :id"),
-    @NamedQuery(name = "Group1.findByGroupname", query = "SELECT g FROM Group1 g WHERE g.groupname = :groupname"),
-    @NamedQuery(name = "Group1.findByPurpose", query = "SELECT g FROM Group1 g WHERE g.purpose = :purpose")})
-public class Group1 implements Serializable {
+    @NamedQuery(name = "Groups.findAll", query = "SELECT g FROM Groups g"),
+    @NamedQuery(name = "Groups.findById", query = "SELECT g FROM Groups g WHERE g.id = :id"),
+    @NamedQuery(name = "Groups.findByGroupname", query = "SELECT g FROM Groups g WHERE g.groupname = :groupname"),
+    @NamedQuery(name = "Groups.findByPurpose", query = "SELECT g FROM Groups g WHERE g.purpose = :purpose")})
+public class Groups implements Serializable {
+
+    @Column(name = "userid")
+    private Integer userid;
+    @JoinColumn(name = "id", referencedColumnName = "id")
+    @OneToOne(optional = false)
+    private User user;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,14 +57,14 @@ public class Group1 implements Serializable {
     @Column(name = "purpose")
     private String purpose;
 
-    public Group1() {
+    public Groups() {
     }
 
-    public Group1(Integer id) {
+    public Groups(Integer id) {
         this.id = id;
     }
 
-    public Group1(Integer id, String groupname, String purpose) {
+    public Groups(Integer id, String groupname, String purpose) {
         this.id = id;
         this.groupname = groupname;
         this.purpose = purpose;
@@ -96,10 +104,10 @@ public class Group1 implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Group1)) {
+        if (!(object instanceof Groups)) {
             return false;
         }
-        Group1 other = (Group1) object;
+        Groups other = (Groups) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -108,7 +116,23 @@ public class Group1 implements Serializable {
 
     @Override
     public String toString() {
-        return "com.ntv.pojo.Group1[ id=" + id + " ]";
+        return "com.ntv.pojo.Groups[ id=" + id + " ]";
+    }
+
+    public Integer getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Integer userid) {
+        this.userid = userid;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
     
 }

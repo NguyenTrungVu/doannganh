@@ -21,40 +21,7 @@
 
                 </li>
 
-                <li class="dropdown">
-                    <c:if test="${pageContext.request.userPrincipal.name != null}">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Expenses</a>
-                        <ul class="dropdown-menu">
-                            <c:forEach items="${expenseitem}" var ="c">
-
-                                <li>
-                                    <c:url value="/home" var="ItemPath">
-                                        <c:param name="expenseSet" value="${c.id}" />
-                                    </c:url>
-                                    <a class="dropdown-item" href="${ItemPath}">${c.itemName}</a>
-
-                                </li>
-                            </c:forEach>
-                        </ul>
-                    </c:if>
-                </li>
-                <li class="dropdown">
-                    <c:if test="${pageContext.request.userPrincipal.name != null}">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Incomes</a>
-                        <ul class="dropdown-menu">
-                            <c:forEach items="${incomeitem}" var ="c">
-
-                                <li>
-                                    <c:url value="/home" var="incomePath">
-                                        <c:param name="incomeSet" value="${c.id}" />
-                                    </c:url>
-                                    <a class="dropdown-item" href="${incomePath}">${c.inSource}</a>
-
-                                </li>
-                            </c:forEach>
-                        </ul>
-                    </c:if>
-                </li>
+                
 
                 <c:if test="${pageContext.request.userPrincipal.name == null}">
                     <li class="nav-item">

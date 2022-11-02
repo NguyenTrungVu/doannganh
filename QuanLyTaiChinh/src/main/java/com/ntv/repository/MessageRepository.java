@@ -4,13 +4,15 @@
  */
 package com.ntv.repository;
 
-import com.ntv.pojo.Groupexpense;
+import com.ntv.pojo.Groups;
+import com.ntv.pojo.Message;
+import java.util.List;
 
 /**
  *
  * @author inmac
  */
-public interface GroupExpenseRepository {
-    boolean addIncomeGroup(Groupexpense expenseGroup);
-    boolean addIncomeGroupFromTemp(int userId, int groupId, long money, String purpose, int type);
+public interface MessageRepository {
+    public boolean addMessage(Message message);
+    public List<Message> loadMessage(Groups groupId);
 }

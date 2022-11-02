@@ -4,13 +4,13 @@
  */
 package com.ntv.repository;
 
-import com.ntv.pojo.Groupexpense;
+import com.ntv.pojo.Category;
+import java.util.List;
 
 /**
  *
  * @author inmac
  */
-public interface GroupExpenseRepository {
-    boolean addIncomeGroup(Groupexpense expenseGroup);
-    boolean addIncomeGroupFromTemp(int userId, int groupId, long money, String purpose, int type);
+public interface CategoryRepository {
+    List<Category> getCategories();
 }

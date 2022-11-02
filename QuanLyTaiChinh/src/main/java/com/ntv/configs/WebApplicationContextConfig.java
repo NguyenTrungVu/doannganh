@@ -6,7 +6,7 @@ package com.ntv.configs;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.ntv.validator.UserNameValidator;
+//import com.ntv.validator.UserNameValidator;
 import com.ntv.validator.WebAppValidator;
 import java.util.HashSet;
 import java.util.Set;
@@ -83,7 +83,7 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     @Bean
     public WebAppValidator userValidator(){
         Set<Validator> v = new HashSet<>();
-        v.add(new UserNameValidator());
+//        v.add(new UserNameValidator());
         
         WebAppValidator v1 = new WebAppValidator();
         v1.setSpringValidator(v);

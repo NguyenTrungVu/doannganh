@@ -5,6 +5,7 @@
 package com.ntv.controllers;
 
 
+import com.ntv.service.CategoryService;
 import com.ntv.service.InexpenseService;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
@@ -28,11 +29,13 @@ public class HomeController {
    
     @Autowired
     private InexpenseService inexpenseService;
+    @Autowired
+    private CategoryService categoryService;
     
     @ModelAttribute
     public void commonAtt(Model model, HttpSession session){
-       
-        model.addAttribute("currentUser", session.getAttribute("currentUser"));
+          model.addAttribute("category", this.categoryService.getCategories());
+          model.addAttribute("currentUser", session.getAttribute("currentUser"));
         
     }
     

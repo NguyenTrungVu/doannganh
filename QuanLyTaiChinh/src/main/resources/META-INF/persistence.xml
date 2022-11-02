@@ -2,15 +2,16 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="com.ntv_QuanLyTaiChinh_war_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>com.ntv.pojo.Belong</class>
     <class>com.ntv.pojo.User</class>
     <class>com.ntv.pojo.Message</class>
     <class>com.ntv.pojo.Inexpense</class>
-    <class>com.ntv.pojo.Group1</class>
     <class>com.ntv.pojo.Groupexpense</class>
     <class>com.ntv.pojo.Rule</class>
     <class>com.ntv.pojo.Groupexpensetemp</class>
     <class>com.ntv.pojo.Category</class>
+    <class>com.ntv.pojo.Group1</class>
+    <class>com.ntv.pojo.Groups</class>
+    <class>com.ntv.pojo.Belong</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Financedb?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

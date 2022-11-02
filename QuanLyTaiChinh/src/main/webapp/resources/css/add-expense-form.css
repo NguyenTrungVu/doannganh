@@ -51,32 +51,30 @@ label i {
   margin: 0 10px 0 0;
 }*/
 
-.field:focus-within label {
+.add-expense .field:focus-within label {
   color: #000;
   letter-spacing: 2px;
 }
 
-input,
-textarea {
+.add-expense input, textarea {
   background: rgba(255, 255, 255, 0.5);
   border: none;
   border-radius: 4px;
   box-shadow: 0 8px 6px -6px #555;
 }
-input:focus,
-textarea:focus {
+.add-expense input:focus, textarea:focus {
   background: white;
   box-shadow: none;
 }
 
-textarea {
+.add-expense textarea {
   resize: none;
 }
-textarea::-webkit-scrollbar {
+.add-expense textarea::-webkit-scrollbar {
   width: 0;
 }
 
-button {
+.add-expense button {
   background: #2f4ad0;
   margin: 16px 0 50px 0;
   padding: 8px 16px;
@@ -86,26 +84,24 @@ button {
   cursor: pointer;
   box-shadow: 0 8px 6px -6px #555;
 }
-button:hover {
+.add-expense button:hover {
   letter-spacing: 2px;
   box-shadow: none;
 }
 
-.social-media {
+.add-expense {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
 }
-:not(.social-media) {
-  font-size: 14px;
-}
-.social-media span {
+
+.add-expense span {
   font-size: 16px;
 }
-.social-media span .fas {
+.add-expense span .fas {
   margin: 0 0 0 10px;
 }
-.social-media a {
+.add-expense a {
   color: #000;
   font-size: 20px;
 }

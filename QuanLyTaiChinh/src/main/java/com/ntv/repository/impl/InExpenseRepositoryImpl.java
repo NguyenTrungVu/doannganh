@@ -60,7 +60,7 @@ public class InExpenseRepositoryImpl implements InexpenseRepository {
 
             String kw = params.get("kw");
             if (kw != null && !kw.isEmpty()) {
-                Predicate p = b.like(rI.get("note").as(String.class), String.format("%%%s%%", kw));
+                Predicate p = b.like(rI.get("purpose").as(String.class), String.format("%%%s%%", kw));
                 predicates.add(p);
             }
 

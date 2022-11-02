@@ -4,10 +4,17 @@
  */
 package com.ntv.service;
 
+import com.ntv.pojo.Groups;
+import com.ntv.pojo.Message;
+import java.util.List;
+
 /**
  *
  * @author inmac
  */
-public interface GroupExpenseServiceTemp {
-    
+public interface MessageService {
+
+    public boolean addMessage(Message message);
+
+    public List<Message> loadMessage(Groups groupId);
 }

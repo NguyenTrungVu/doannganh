@@ -37,9 +37,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Inexpense.findByCreatedDate", query = "SELECT i FROM Inexpense i WHERE i.createdDate = :createdDate"),
     @NamedQuery(name = "Inexpense.findByType", query = "SELECT i FROM Inexpense i WHERE i.type = :type")})
 public class Inexpense implements Serializable {
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "type")
+    private int type;
     
-    public static final String INCOME = "INCOME";
-    public static final String EXPENSE = "EXPENSE";
+    
     
 
     private static final long serialVersionUID = 1L;
@@ -63,11 +67,6 @@ public class Inexpense implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 10, message = "{inexpense.type.nullErr}")
-    @Column(name = "type")
-    private String type;
 
     public Inexpense() {
     }
@@ -76,7 +75,7 @@ public class Inexpense implements Serializable {
         this.id = id;
     }
 
-    public Inexpense(Integer id, int userId, String purpose, String type) {
+    public Inexpense(Integer id, int userId, String purpose, int type) {
         this.id = id;
         this.userId = userId;
         this.purpose = purpose;
@@ -123,13 +122,6 @@ public class Inexpense implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
     @Override
     public int hashCode() {
@@ -154,6 +146,14 @@ public class Inexpense implements Serializable {
     @Override
     public String toString() {
         return "com.ntv.pojo.Inexpense[ id=" + id + " ]";
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
     
 }

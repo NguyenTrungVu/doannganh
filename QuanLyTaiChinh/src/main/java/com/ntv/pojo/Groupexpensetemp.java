@@ -65,9 +65,8 @@ public class Groupexpensetemp implements Serializable {
     private Date createdDate;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
     @Column(name = "type")
-    private String type;
+    private int type;
 
     public Groupexpensetemp() {
     }
@@ -76,7 +75,7 @@ public class Groupexpensetemp implements Serializable {
         this.id = id;
     }
 
-    public Groupexpensetemp(Integer id, int userId, int groupId, String purpose, String type) {
+    public Groupexpensetemp(Integer id, int userId, int groupId, String purpose, int type) {
         this.id = id;
         this.userId = userId;
         this.groupId = groupId;
@@ -132,11 +131,11 @@ public class Groupexpensetemp implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 
