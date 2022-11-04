@@ -38,9 +38,9 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="content"
                        value="/WEB-INF/jsp/create-group.jsp" />
     </definition>
-     <definition name="expense-stats" extends="baseLayout">
+     <definition name="inexpense-stats" extends="baseLayout">
         <put-attribute name="title" value="Thong ke chi phi" />
         <put-attribute name="content"
-                       value="/WEB-INF/jsp/expense-stats.jsp" />
+                       value="/WEB-INF/jsp/inexpense-stats.jsp" />
     </definition>
 </tiles-definitions>

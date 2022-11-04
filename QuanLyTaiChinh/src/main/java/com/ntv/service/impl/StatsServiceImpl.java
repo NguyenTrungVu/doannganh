@@ -4,6 +4,7 @@
  */
 package com.ntv.service.impl;
 
+import com.ntv.pojo.Category;
 import com.ntv.pojo.Groups;
 import com.ntv.pojo.PaidMoney;
 import com.ntv.pojo.ReturnMoney;
@@ -26,36 +27,53 @@ public class StatsServiceImpl implements StatsService {
     private StatsRepository statsRepository;
 
     @Override
-    public List<Object[]> incomeStatsForDay(Date fromDate, Date toDate, int type) {
-        return this.statsRepository.incomeStatsForDay(fromDate, toDate, type);
+    public List<Object[]> incomeStatsForDay(int month, int year, Category type) {
+        return this.statsRepository.incomeStatsForDay(month, year, type);
     }
 
     @Override
-    public BigDecimal totalIncomeMonth(int month, int type) {
-return this.statsRepository.totalIncomeMonth(month, type);    }
+    public BigDecimal totalIncomeMonth(int month, Category type) {
+        return this.statsRepository.totalIncomeMonth(month, type);
+    }
 
     @Override
     public int countUserIncomeGroup(Groups groupId, int type) {
-return this.statsRepository.countUserIncomeGroup(groupId, type);    }
+        return this.statsRepository.countUserIncomeGroup(groupId, type);
+    }
 
     @Override
     public BigDecimal totalMoneyGroup(Groups groupId) {
-return this.statsRepository.totalMoneyGroup(groupId);    }
+        return this.statsRepository.totalMoneyGroup(groupId);
+    }
 
     @Override
     public int coutMember(Groups groupId) {
-return this.statsRepository.coutMember(groupId);    }
+        return this.statsRepository.coutMember(groupId);
+    }
 
     @Override
     public BigDecimal totalMoneyUserIncomeGroup(Groups groupId) {
-return this.statsRepository.totalMoneyUserIncomeGroup(groupId) ;   }
+        return this.statsRepository.totalMoneyUserIncomeGroup(groupId);
+    }
 
     @Override
     public List<ReturnMoney> moneyUserPay(Groups groupId) {
-return this.statsRepository.moneyUserPay(groupId);    }
+        return this.statsRepository.moneyUserPay(groupId);
+    }
 
     @Override
     public List<PaidMoney> moneyUserPaid(Groups groupId) {
-return this.statsRepository.moneyUserPaid(groupId);    }
+        return this.statsRepository.moneyUserPaid(groupId);
+    }
+
+    @Override
+    public List<Object[]> exStats(int month) {
+        return this.statsRepository.exStats(month);
+    }
+
+    @Override
+    public BigDecimal currentMoney() {
+        return this.statsRepository.currentMoney();
+    }
 
 }

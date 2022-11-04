@@ -50,11 +50,11 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "User.findByRegdate", query = "SELECT u FROM User u WHERE u.regdate = :regdate")})
 public class User implements Serializable {
 
-    @OneToMany(mappedBy = "userid")
-    private Set<Groups> groupsSet;
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
-    private Groups groups;
+//    @OneToMany(mappedBy = "userid")
+//    private Set<Groups> groupsSet;
+//
+//    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+//    private Groups groups;
 
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
@@ -254,21 +254,21 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public Groups getGroups() {
-        return groups;
-    }
-
-    public void setGroups(Groups groups) {
-        this.groups = groups;
-    }
-
-    @XmlTransient
-    public Set<Groups> getGroupsSet() {
-        return groupsSet;
-    }
-
-    public void setGroupsSet(Set<Groups> groupsSet) {
-        this.groupsSet = groupsSet;
-    }
+//    public Groups getGroups() {
+//        return groups;
+//    }
+//
+//    public void setGroups(Groups groups) {
+//        this.groups = groups;
+//    }
+//
+//    @XmlTransient
+//    public Set<Groups> getGroupsSet() {
+//        return groupsSet;
+//    }
+//
+//    public void setGroupsSet(Set<Groups> groupsSet) {
+//        this.groupsSet = groupsSet;
+//    }
     
 }

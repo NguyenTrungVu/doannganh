@@ -14,32 +14,23 @@
         <div class="row" >
             <div class="col-md-3" style="margin-top: 50px">
                 <div id="accordion">
-                    <div class="card">
-                        <div class="card-header" style="position: relative">
-                            <a class="btn" data-bs-toggle="collapse" href="#collapseOne">
-                                Expense
-                            </a>
+
+
+                    <c:url value="/stats" var="action" />
+                    <form  action="${action}" >
+                        <div class="mb-3 mt-3">
+                            <label class="form-label">Trong nam:</label>
+                            <input class="form-control" type="number" placeholder="Enter year" id="Year" name="Year"/>
                         </div>
-                        <div></div>
-                        <div id="collapseOne" class="collapse show" data-bs-parent="#accordion">
-                            <div class="card-body">
-                                <input type="button" class="btn btn-toggle" value="Month">
-                                <input type="button" class="btn" value="Year">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <a class="collapsed btn" data-bs-toggle="collapse" href="">
-                                Income</a>
-                        </div>
-                        <div id="collapseTwo" class="collapse" data-bs-parent="#accordion">
-                            <div class="card-body">
-                                <input type="button" class="btn btn-toggle" value="Month">
-                                <input type="button" class="btn" value="Year">
-                            </div>
-                        </div>
-                    </div>
+                        <!--                            <div class="mb-3 mt-3">
+                                                        <label class="form-label">Trong nam:</label>
+                                                        <input class="form-control" type="number" placeholder="Enter year" id="Year" name="Year"/>
+                                                    </div>-->
+
+                        <input type="submit" value="Bao Cao" class="btn btn-success"/>
+                    </form>
+
+
                 </div>
             </div>
             <div class="col-md-9">
@@ -51,8 +42,8 @@
                             <table class="table table-hover table-striped">
                                 <thead>
                                     <tr class="table-success">
-                                        <th>Ma danh muc</th>
-                                        <th>Ten danh muc</th>
+                                        <th>Ma</th>
+                                        <th>Ten</th>
                                         <th>Tong tien</th>
                                     </tr>
                                 </thead>
@@ -88,13 +79,13 @@
             <div class="col-md-3">
                 <c:url value="/stats" var="action" />
                 <form  action="${action}" >
-                 
-                 
+
+
                     <div class="mb-3 mt-3"
-                        <label class="form-label">Khoan Chi:</label>
+                         <label class="form-label">Loai:</label>
                         <select type="email" class="form-control" id="item"  name="item" path="item">
-                            <c:forEach items="${expenseitem}" var="i">
-                                <option value="${i.id}">${i.itemName}</option>
+                            <c:forEach items="${category}" var="i">
+                                <option value="${i.id}">${i.name}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -116,18 +107,18 @@
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr class="table-success">
-                               
-                                <th>Ngay chi phi</th>
+                                <th>Ma</th>
+                                <th>Ten</th>
                                 <th>Tong tien</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="${expenseStats}" var="c">
+                            <c:forEach items="${timeStats}" var="e">
                                 <tr>
-                                    <td>${c[0]}</td>
-                                   
+                                    <td>${e[0]}</td>
+                                    <td>${e[1]}</td>
                                     <td>
-                                        <fmt:formatNumber type="number" value="${c[1]}" maxFractionDigits="3" /> VND
+                                        <fmt:formatNumber type="number" value="${e[2]}" maxFractionDigits="3" /> VND
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -162,7 +153,7 @@
     exInfo.push(${e[2]});
     </c:forEach>
 
-    <c:forEach items="${expenseStats}" var="c">
+    <c:forEach items="${timeStats}" var="c">
     exLabels2.push('${c[0]}');
     exInfo2.push(${c[1]});
     </c:forEach>

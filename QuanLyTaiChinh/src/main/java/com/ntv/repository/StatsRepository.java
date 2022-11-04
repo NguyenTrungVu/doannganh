@@ -4,6 +4,7 @@
  */
 package com.ntv.repository;
 
+import com.ntv.pojo.Category;
 import com.ntv.pojo.Groups;
 import com.ntv.pojo.PaidMoney;
 import com.ntv.pojo.ReturnMoney;
@@ -17,9 +18,12 @@ import java.util.List;
  * @author inmac
  */
 public interface StatsRepository {
-    List<Object[]> incomeStatsForDay( Date fromDate, Date toDate, int type);
-    
-    BigDecimal totalIncomeMonth(int month,  int type);
+     List<Object[]> exStats(int month);
+    List<Object[]> incomeStatsForDay(int month, int year, Category type);
+    BigDecimal currentMoney ();
+    BigDecimal currentIn ();
+    BigDecimal currentEx ();
+    BigDecimal totalIncomeMonth(int month,  Category type);
    
     int countUserIncomeGroup(Groups groupId, int type);
     BigDecimal totalMoneyGroup(Groups groupId);

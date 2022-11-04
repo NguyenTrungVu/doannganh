@@ -5,7 +5,9 @@
 package com.ntv.controllers;
 
 
+import com.ntv.pojo.Category;
 import com.ntv.pojo.Inexpense;
+import com.ntv.service.StatsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,16 +22,20 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class StatsController {
-//    @Autowired
-//    private ExStatsService exStatsService;
-//    
-//    @GetMapping("/stats")
-//    public String stats(Model model,
-//            @RequestParam(value = "item", required = false) Inexpense item ,
-//            @RequestParam(value = "year", defaultValue = "2022") int year ,
-//            @RequestParam(value = "month", defaultValue = "0") int month ) {
-//        model.addAttribute("exStats", this.exStatsService.exStats());
-//        model.addAttribute("expenseStats", this.exStatsService.expenseStats(item, month,  year));
-//        return "expense-stats";
-//    }
+    @Autowired
+    private StatsService statsService;
+    
+    @GetMapping("/stats")
+    public String stats(Model model,
+            
+             @RequestParam(value = "category", required = false) Category type ,
+            @RequestParam(value = "year", defaultValue = "2022") int year ,
+            @RequestParam(value = "month", defaultValue = "0") int month,
+            @RequestParam(value = "Year", defaultValue = "2022") int Year
+            ) {
+        model.addAttribute("exStats", this.statsService.exStats(Year));
+        model.addAttribute("timeStats", this.statsService.incomeStatsForDay(month, year, type));
+        
+        return "inexpense-stats";
+    }
 }

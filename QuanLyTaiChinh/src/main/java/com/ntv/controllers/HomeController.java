@@ -7,6 +7,7 @@ package com.ntv.controllers;
 
 import com.ntv.service.CategoryService;
 import com.ntv.service.InexpenseService;
+import com.ntv.service.StatsService;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public class HomeController {
     private InexpenseService inexpenseService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private StatsService statsService;
     
     @ModelAttribute
     public void commonAtt(Model model, HttpSession session){
@@ -46,7 +49,7 @@ public class HomeController {
         int size = Integer.parseInt(params.getOrDefault("size", "5"));
         model.addAttribute("expenses", this.inexpenseService.getExpense(params, page, size));
         model.addAttribute("expenseCounter", this.inexpenseService.countExpense());
-        
+        model.addAttribute("currentMoney", this.statsService.currentMoney());
         
         return "home";
     }

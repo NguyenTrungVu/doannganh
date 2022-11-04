@@ -22,7 +22,7 @@
                         <a class="btn" data-bs-toggle="collapse" href="#collapseOne">
                             Individual 
                         </a>
-                        <a class="btn" href="<c:url value=""/>">
+                        <a class="btn" href="<c:url value="/stats"/>">
                             Detail
                         </a>
                         <c:if test="${pageContext.request.userPrincipal.name == null}">
@@ -62,6 +62,10 @@
         </div>
         <div class="col-md-9">
             <div class="container">
+                <section class="d-flex">
+                    <h3>So tien hien co:</h3>
+                    <h3 style="margin-left: 10px"><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${currentMoney}" /> VND</h3>
+                </section>
                 <section class="page-contain">
                     <div class="d-flex justify-content-between">
                         <ul class="pagination">
