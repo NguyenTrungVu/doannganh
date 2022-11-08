@@ -55,10 +55,10 @@ public class InexpenseServiceImpl implements InexpenseService {
         long cost = e.getPrice();
         e.setPrice(cost);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        e.setUserId(this.userRepository.getUsers(authentication.getName()).getId());
+        e.setUserId(this.userRepository.getUsers(authentication.getName()));
         e.setCreatedDate(new Date());
-        int type = e.getType();
-        e.setType(type);
+        
+        e.setType(e.getType());
         return this.inexpenseRepository.addExpense(e);
     }
 

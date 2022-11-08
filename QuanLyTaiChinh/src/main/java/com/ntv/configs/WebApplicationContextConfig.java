@@ -6,6 +6,7 @@ package com.ntv.configs;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.ntv.formatters.CategoryFormatter;
 //import com.ntv.validator.UserNameValidator;
 import com.ntv.validator.WebAppValidator;
 import java.util.HashSet;
@@ -49,11 +50,12 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         configurer.enable();
     }
 
-//    @Override
-//    public void addFormatters(FormatterRegistry registry) {
-//        registry.addFormatter(new ExpenseItemFormatter());
-//        registry.addFormatter(new IncomeItemFormatter());
-//    }
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatter(new CategoryFormatter());
+        
+    }
+    
     @Bean
     public InternalResourceViewResolver
             getInternalResourceViewResolver() {

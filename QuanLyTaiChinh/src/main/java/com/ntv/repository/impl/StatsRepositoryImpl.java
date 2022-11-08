@@ -11,6 +11,7 @@ import com.ntv.pojo.PaidMoney;
 import com.ntv.pojo.ReturnMoney;
 import com.ntv.pojo.User;
 import com.ntv.repository.BelongRepository;
+import com.ntv.repository.CategoryRepository;
 import com.ntv.repository.GroupRepository;
 import com.ntv.repository.UserRepository;
 
@@ -52,29 +53,30 @@ public class StatsRepositoryImpl implements StatsRepository {
     private StatsService statsService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public List<Object[]> incomeStatsForDay(int month, int year, Category type) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Session session = this.sessionFactory.getObject().getCurrentSession();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CriteriaBuilder b = session.getCriteriaBuilder();
-        CriteriaQuery<Object[]> q = b.createQuery(Object[].class);
-        User u = this.userRepository.getUsers(authentication.getName());
-        Root rootI = q.from(Inexpense.class);
-        Root rootU = q.from(User.class);
-        Root rootC = q.from(Category.class);
+        CriteriaQuery<Object[]> e = b.createQuery(Object[].class);
 
-        q.where(b.equal(rootI.get("userId"), rootU.get("id")),
-                b.equal(rootI.get("userId"), u.getId()),
-                b.equal(rootI.get("type"), rootC.get("id")),
-                b.equal(rootI.get("type"), type),
-                b.equal(b.function("MONTH", Integer.class, rootI.get("createdDate")), month),
-                b.equal(b.function("YEAR", Integer.class, rootI.get("createdDate")), year));
+        Root rE = e.from(Inexpense.class);
+        Root rI = e.from(Category.class);
+        Root rU = e.from(User.class);
 
-        q.multiselect(rootI.get("createdDate"), b.sum(rootI.get("price")));
-        q.groupBy(rootI.get("createdDate"));
-        q = q.orderBy(b.asc(rootI.get("createdDate")));
-        Query query = session.createQuery(q);
+        e.where(b.equal(rE.get("type"), type),
+                b.equal(rE.get("type"), rI.get("id")),
+                b.equal(rE.get("userId"), rU.get("id")),
+                b.equal(rE.get("userId"), this.userRepository.getUsers(authentication.getName())),
+                b.equal(b.function("year", Integer.class, rE.get("createdDate")), year),
+                b.equal(b.function("month", Integer.class, rE.get("createdDate")), month));
+        e.multiselect(rE.get("purpose"), rE.get("createdDate"), rE.get("price"));
+
+        e = e.orderBy(b.asc(rE.get("createdDate")));
+        Query query = session.createQuery(e);
         return query.getResultList();
     }
 
@@ -84,11 +86,11 @@ public class StatsRepositoryImpl implements StatsRepository {
         Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Inexpense> q = b.createQuery(Inexpense.class);
-        User u = this.userRepository.getUsers(authentication.getName());
+
         Root rootI = q.from(Inexpense.class);
 
         List<Predicate> predicates = new ArrayList<>();
-        predicates.add(b.equal(rootI.get("userId"), u.getId()));
+        predicates.add(b.equal(rootI.get("userId"), this.userRepository.getUser(authentication.getName())));
         predicates.add(b.equal(rootI.get("type"), type));
 
         predicates.add(b.equal(b.function("month", Integer.class, rootI.get("time")), month));
@@ -201,10 +203,10 @@ public class StatsRepositoryImpl implements StatsRepository {
         Root rE = e.from(Inexpense.class);
         Root rI = e.from(Category.class);
         Root rU = e.from(User.class);
-        User u = this.userRepository.getUsers(authentication.getName());
+
         e.where(b.equal(rE.get("type"), rI.get("id")),
                 b.equal(rE.get("userId"), rU.get("id")),
-                b.equal(rE.get("userId"), u.getId()),
+                b.equal(rE.get("userId"), this.userRepository.getUsers(authentication.getName())),
                 b.equal(b.function("YEAR", Integer.class, rE.get("createdDate")), month));
         e.multiselect(rI.get("id"), rI.get("name"), b.sum(rE.get("price")));
         e.groupBy(rI.get("id"));
@@ -215,52 +217,62 @@ public class StatsRepositoryImpl implements StatsRepository {
 
     @Override
     public BigDecimal currentMoney() {
-        BigDecimal a = this.currentIn().subtract(this.currentEx()) ;
+        BigDecimal a = this.currentIn().subtract(this.currentEx());
         return a;
     }
+//
 
     @Override
     public BigDecimal currentIn() {
+       Session session = this.sessionFactory.getObject().getCurrentSession();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Session session = this.sessionFactory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
-        CriteriaQuery<Inexpense> q = b.createQuery(Inexpense.class);
-        User u = this.userRepository.getUsers(authentication.getName());
-        Root rootI = q.from(Inexpense.class);
+        CriteriaQuery<Object[]> e = b.createQuery(Object[].class);
 
-        List<Predicate> predicates = new ArrayList<>();
-        predicates.add(b.equal(rootI.get("userId"), u.getId()));
-        predicates.add(b.equal(rootI.get("type"), "1"));
-        q.select(b.sum(rootI.get("price").as(BigDecimal.class)));
-        q.where(predicates.toArray(new Predicate[]{}));
+        Root rE = e.from(Inexpense.class);
+        Root rI = e.from(Category.class);
+        Root rU = e.from(User.class);
+        Category c = this.categoryRepository.getCateById(1);
+        e.where(b.equal(rE.get("type"), c),
+                b.equal(rE.get("type"), rI.get("id")),
+                b.equal(rE.get("userId"), rU.get("id")),
+                b.equal(rE.get("userId"), this.userRepository.getUsers(authentication.getName())));
 
-        Query query = session.createQuery(q);
-        if (query.getResultList().get(0) != null) {
+        e.select(b.sum(rE.get("price").as(BigDecimal.class)));
+        Query query = session.createQuery(e);
+         if (query.getResultList().get(0) != null) {
             return (BigDecimal) query.getResultList().get(0);
         }
+
         return BigDecimal.valueOf(0.0);
     }
+//
 
     @Override
     public BigDecimal currentEx() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//       
         Session session = this.sessionFactory.getObject().getCurrentSession();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CriteriaBuilder b = session.getCriteriaBuilder();
-        CriteriaQuery<Inexpense> q = b.createQuery(Inexpense.class);
-        User u = this.userRepository.getUsers(authentication.getName());
-        Root rootI = q.from(Inexpense.class);
+        CriteriaQuery<Object[]> e = b.createQuery(Object[].class);
 
-        List<Predicate> predicates = new ArrayList<>();
-        predicates.add(b.equal(rootI.get("userId"), u.getId()));
-        predicates.add(b.equal(rootI.get("type"), "2"));
-        q.select(b.sum(rootI.get("price").as(BigDecimal.class)));
-        q.where(predicates.toArray(new Predicate[]{}));
+        Root rE = e.from(Inexpense.class);
+        Root rI = e.from(Category.class);
+        Root rU = e.from(User.class);
+        Category c = this.categoryRepository.getCateById(2);
+        e.where(b.equal(rE.get("type"), c),
+                b.equal(rE.get("type"), rI.get("id")),
+                b.equal(rE.get("userId"), rU.get("id")),
+                b.equal(rE.get("userId"), this.userRepository.getUsers(authentication.getName())));
 
-        Query query = session.createQuery(q);
-        if (query.getResultList().get(0) != null) {
+        e.select(b.sum(rE.get("price").as(BigDecimal.class)));
+        Query query = session.createQuery(e);
+         if (query.getResultList().get(0) != null) {
             return (BigDecimal) query.getResultList().get(0);
         }
+
         return BigDecimal.valueOf(0.0);
+   
     }
 
 }

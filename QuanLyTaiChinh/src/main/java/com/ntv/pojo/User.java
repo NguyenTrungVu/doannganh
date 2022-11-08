@@ -50,6 +50,9 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "User.findByRegdate", query = "SELECT u FROM User u WHERE u.regdate = :regdate")})
 public class User implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Set<Inexpense> inexpenseSet;
+
 //    @OneToMany(mappedBy = "userid")
 //    private Set<Groups> groupsSet;
 //
@@ -270,5 +273,14 @@ public class User implements Serializable {
 //    public void setGroupsSet(Set<Groups> groupsSet) {
 //        this.groupsSet = groupsSet;
 //    }
+
+    @XmlTransient
+    public Set<Inexpense> getInexpenseSet() {
+        return inexpenseSet;
+    }
+
+    public void setInexpenseSet(Set<Inexpense> inexpenseSet) {
+        this.inexpenseSet = inexpenseSet;
+    }
     
 }

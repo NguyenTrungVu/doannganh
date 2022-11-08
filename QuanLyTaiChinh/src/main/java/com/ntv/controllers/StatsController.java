@@ -27,8 +27,7 @@ public class StatsController {
     
     @GetMapping("/stats")
     public String stats(Model model,
-            
-             @RequestParam(value = "category", required = false) Category type ,
+            @RequestParam(value = "type", required = false) Category type ,
             @RequestParam(value = "year", defaultValue = "2022") int year ,
             @RequestParam(value = "month", defaultValue = "0") int month,
             @RequestParam(value = "Year", defaultValue = "2022") int Year

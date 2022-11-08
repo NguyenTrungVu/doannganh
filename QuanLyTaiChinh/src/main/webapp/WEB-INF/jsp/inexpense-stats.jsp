@@ -83,7 +83,7 @@
 
                     <div class="mb-3 mt-3"
                          <label class="form-label">Loai:</label>
-                        <select type="email" class="form-control" id="item"  name="item" path="item">
+                        <select type="email" class="form-control" id="type"  name="type" path="type">
                             <c:forEach items="${category}" var="i">
                                 <option value="${i.id}">${i.name}</option>
                             </c:forEach>
@@ -107,16 +107,18 @@
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr class="table-success">
-                                <th>Ma</th>
-                                <th>Ten</th>
+<!--                                <th>Ma</th>-->
+                                <th>Muc dich</th>
+                                <th>Ngay chi</th>
                                 <th>Tong tien</th>
                             </tr>
                         </thead>
                         <tbody>
                             <c:forEach items="${timeStats}" var="e">
                                 <tr>
+                                    
                                     <td>${e[0]}</td>
-                                    <td>${e[1]}</td>
+                                     <td>${e[1]}</td>
                                     <td>
                                         <fmt:formatNumber type="number" value="${e[2]}" maxFractionDigits="3" /> VND
                                     </td>
@@ -155,7 +157,8 @@
 
     <c:forEach items="${timeStats}" var="c">
     exLabels2.push('${c[0]}');
-    exInfo2.push(${c[1]});
+    exTime2.push('${c[1]}');
+    exInfo2.push(${c[2]});
     </c:forEach>
 
     window.onload = function () {

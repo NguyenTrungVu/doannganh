@@ -34,6 +34,9 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Category implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
+    private Set<Inexpense> inexpenseSet;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
     private Set<Groupexpensetemp> groupexpensetempSet;
 
     private static final long serialVersionUID = 1L;
@@ -47,7 +50,7 @@ public class Category implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "name")
     private String name;
-
+   
     public Category() {
     }
 
@@ -108,6 +111,15 @@ public class Category implements Serializable {
 
     public void setGroupexpensetempSet(Set<Groupexpensetemp> groupexpensetempSet) {
         this.groupexpensetempSet = groupexpensetempSet;
+    }
+
+    @XmlTransient
+    public Set<Inexpense> getInexpenseSet() {
+        return inexpenseSet;
+    }
+
+    public void setInexpenseSet(Set<Inexpense> inexpenseSet) {
+        this.inexpenseSet = inexpenseSet;
     }
     
 }

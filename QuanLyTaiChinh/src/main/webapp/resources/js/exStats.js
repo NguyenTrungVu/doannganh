@@ -45,7 +45,7 @@ function expenseChart( exLabels2=[], exInfo2=[]) {
             }]
     };
     const config = {
-        type: 'bar',
+        type: 'line',
         data: data,
     };
 
