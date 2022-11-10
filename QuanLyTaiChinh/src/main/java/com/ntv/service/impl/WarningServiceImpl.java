@@ -41,4 +41,9 @@ public class WarningServiceImpl implements WarningService {
         return this.warningRepository.countWarning();
     }
 
+    @Override
+    public List<String> getWarning() {
+        return this.warningRepository.getWarning();
+    }
+
 }

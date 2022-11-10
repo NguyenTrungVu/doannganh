@@ -23,7 +23,8 @@ public interface StatsRepository {
     BigDecimal currentMoney ();
     BigDecimal currentIn ();
     BigDecimal currentEx ();
-    BigDecimal totalIncomeMonth(int month,  Category type);
+    BigDecimal totalIncomeMonth(int month);
+    BigDecimal totalExpenseMonth(int month);
    
     int countUserIncomeGroup(Groups groupId, int type);
     BigDecimal totalMoneyGroup(Groups groupId);

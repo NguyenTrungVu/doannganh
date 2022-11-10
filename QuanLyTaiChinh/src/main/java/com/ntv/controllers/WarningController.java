@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 public class WarningController {
-     @Autowired
+
+    @Autowired
     private WarningService warningService;
-    
+
     @GetMapping("/warning")
-    public String warning(Model model, HttpSession session){
-        
+    public String warning(Model model, HttpSession session) {
         model.addAttribute("warnings", this.warningService.getWarnings());
         return "warning";
     }

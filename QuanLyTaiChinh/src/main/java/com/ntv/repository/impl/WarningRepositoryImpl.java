@@ -31,7 +31,7 @@ public class WarningRepositoryImpl implements WarningRepository {
     private LocalSessionFactoryBean sessionFactory;
     @Autowired
     private UserRepository userRepository;
-    
+
     @Override
     public boolean addWarning(Rule warning) {
         Session s = this.sessionFactory.getObject().getCurrentSession();
@@ -53,7 +53,7 @@ public class WarningRepositoryImpl implements WarningRepository {
         User u = this.userRepository.getUsers(authentication.getName());
         Session s = this.sessionFactory.getObject().getCurrentSession();
         Query query = s.createQuery("from Rule as w where w.userId=:user");
-        query.setParameter("user", u.getId());
+        query.setParameter("user", u);
         return query.getResultList();
     }
 
@@ -63,7 +63,7 @@ public class WarningRepositoryImpl implements WarningRepository {
         User u = this.userRepository.getUsers(authentication.getName());
         Session s = this.sessionFactory.getObject().getCurrentSession();
         Query query = s.createQuery("delete from Rule where userId=:user AND content=:content");
-        query.setParameter("user", u.getId());
+        query.setParameter("user", u);
         query.setParameter("content", content);
 
         int row = query.executeUpdate();
@@ -80,8 +80,18 @@ public class WarningRepositoryImpl implements WarningRepository {
         User u = this.userRepository.getUsers(authentication.getName());
         Session s = this.sessionFactory.getObject().getCurrentSession();
         Query query = s.createQuery("SELECT count(*) FROM Rule where userId=:userId");
-        query.setParameter("userId", u.getId());
+        query.setParameter("userId", u);
         return Math.toIntExact((long) query.getSingleResult());
+    }
+
+    @Override
+    public List<String> getWarning() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User u = this.userRepository.getUsers(authentication.getName());
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        Query query = s.createQuery("select content from Rule as w where w.userId=:user");
+        query.setParameter("user", u);
+        return query.getResultList();
     }
 
 }

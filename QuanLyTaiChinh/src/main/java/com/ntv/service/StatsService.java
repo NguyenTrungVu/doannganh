@@ -20,7 +20,8 @@ public interface StatsService {
      List<Object[]> exStats(int month);
     List<Object[]> incomeStatsForDay( int month, int year, Category type);
       BigDecimal currentMoney ();
-    BigDecimal totalIncomeMonth(int month,  Category type);
+    BigDecimal totalIncomeMonth(int month);
+     BigDecimal totalExpenseMonth(int month);
    
     int countUserIncomeGroup(Groups groupId, int type);
     BigDecimal totalMoneyGroup(Groups groupId);

@@ -81,27 +81,28 @@ public class StatsRepositoryImpl implements StatsRepository {
     }
 
     @Override
-    public BigDecimal totalIncomeMonth(int month, Category type) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    public BigDecimal totalIncomeMonth(int month) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CriteriaBuilder b = session.getCriteriaBuilder();
-        CriteriaQuery<Inexpense> q = b.createQuery(Inexpense.class);
+        CriteriaQuery<Object[]> e = b.createQuery(Object[].class);
 
-        Root rootI = q.from(Inexpense.class);
+        Root rE = e.from(Inexpense.class);
+        Root rI = e.from(Category.class);
+        Root rU = e.from(User.class);
+        Category c = this.categoryRepository.getCateById(1);
+        e.where(b.equal(rE.get("type"), c),
+                b.equal(rE.get("type"), rI.get("id")),
+                b.equal(rE.get("userId"), rU.get("id")),
+                b.equal(b.function("month", Integer.class, rE.get("createdDate")), month),
+                b.equal(rE.get("userId"), this.userRepository.getUsers(authentication.getName())));
 
-        List<Predicate> predicates = new ArrayList<>();
-        predicates.add(b.equal(rootI.get("userId"), this.userRepository.getUser(authentication.getName())));
-        predicates.add(b.equal(rootI.get("type"), type));
-
-        predicates.add(b.equal(b.function("month", Integer.class, rootI.get("time")), month));
-
-        q.select(b.sum(rootI.get("money").as(BigDecimal.class)));
-        q.where(predicates.toArray(new Predicate[]{}));
-
-        Query query = session.createQuery(q);
+        e.select(b.sum(rE.get("price").as(BigDecimal.class)));
+        Query query = session.createQuery(e);
         if (query.getResultList().get(0) != null) {
             return (BigDecimal) query.getResultList().get(0);
         }
+
         return BigDecimal.valueOf(0.0);
     }
 
@@ -224,7 +225,7 @@ public class StatsRepositoryImpl implements StatsRepository {
 
     @Override
     public BigDecimal currentIn() {
-       Session session = this.sessionFactory.getObject().getCurrentSession();
+        Session session = this.sessionFactory.getObject().getCurrentSession();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Object[]> e = b.createQuery(Object[].class);
@@ -240,7 +241,7 @@ public class StatsRepositoryImpl implements StatsRepository {
 
         e.select(b.sum(rE.get("price").as(BigDecimal.class)));
         Query query = session.createQuery(e);
-         if (query.getResultList().get(0) != null) {
+        if (query.getResultList().get(0) != null) {
             return (BigDecimal) query.getResultList().get(0);
         }
 
@@ -267,12 +268,38 @@ public class StatsRepositoryImpl implements StatsRepository {
 
         e.select(b.sum(rE.get("price").as(BigDecimal.class)));
         Query query = session.createQuery(e);
-         if (query.getResultList().get(0) != null) {
+        if (query.getResultList().get(0) != null) {
             return (BigDecimal) query.getResultList().get(0);
         }
 
         return BigDecimal.valueOf(0.0);
-   
+
+    }
+
+    @Override
+    public BigDecimal totalExpenseMonth(int month) {
+        Session session = this.sessionFactory.getObject().getCurrentSession();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Object[]> e = b.createQuery(Object[].class);
+
+        Root rE = e.from(Inexpense.class);
+        Root rI = e.from(Category.class);
+        Root rU = e.from(User.class);
+        Category c = this.categoryRepository.getCateById(2);
+        e.where(b.equal(rE.get("type"), c),
+                b.equal(rE.get("type"), rI.get("id")),
+                b.equal(rE.get("userId"), rU.get("id")), 
+                b.equal(b.function("month", Integer.class, rE.get("createdDate")), month),
+                b.equal(rE.get("userId"), this.userRepository.getUsers(authentication.getName())));
+
+        e.select(b.sum(rE.get("price").as(BigDecimal.class)));
+        Query query = session.createQuery(e);
+        if (query.getResultList().get(0) != null) {
+            return (BigDecimal) query.getResultList().get(0);
+        }
+
+        return BigDecimal.valueOf(0.0);
     }
 
 }

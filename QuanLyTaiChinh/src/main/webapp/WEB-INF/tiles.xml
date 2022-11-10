@@ -44,7 +44,7 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
                        value="/WEB-INF/jsp/inexpense-stats.jsp" />
     </definition>
     <definition name="warning" extends="baseLayout">
-        <put-attribute name="title" value="Thong ke chi phi" />
+        <put-attribute name="title" value="Canh bao" />
         <put-attribute name="content"
                        value="/WEB-INF/jsp/warning.jsp" />
     </definition>

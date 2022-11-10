@@ -51,6 +51,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class User implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Set<Rule> ruleSet;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Set<Inexpense> inexpenseSet;
 
 //    @OneToMany(mappedBy = "userid")
@@ -281,6 +284,15 @@ public class User implements Serializable {
 
     public void setInexpenseSet(Set<Inexpense> inexpenseSet) {
         this.inexpenseSet = inexpenseSet;
+    }
+
+    @XmlTransient
+    public Set<Rule> getRuleSet() {
+        return ruleSet;
+    }
+
+    public void setRuleSet(Set<Rule> ruleSet) {
+        this.ruleSet = ruleSet;
     }
     
 }

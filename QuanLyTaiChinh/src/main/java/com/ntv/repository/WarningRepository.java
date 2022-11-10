@@ -16,6 +16,7 @@ import java.util.List;
 public interface WarningRepository {
     boolean addWarning(Rule warning);
     List<Rule> getWarnings();
+     List<String> getWarning();
     boolean deleteWarning(String content);
     int countWarning();
 }

@@ -32,8 +32,8 @@ public class StatsServiceImpl implements StatsService {
     }
 
     @Override
-    public BigDecimal totalIncomeMonth(int month, Category type) {
-        return this.statsRepository.totalIncomeMonth(month, type);
+    public BigDecimal totalIncomeMonth(int month) {
+        return this.statsRepository.totalIncomeMonth(month);
     }
 
     @Override
@@ -74,6 +74,11 @@ public class StatsServiceImpl implements StatsService {
     @Override
     public BigDecimal currentMoney() {
         return this.statsRepository.currentMoney();
+    }
+
+    @Override
+    public BigDecimal totalExpenseMonth(int month) {
+        return this.statsRepository.totalExpenseMonth(month);
     }
 
 }

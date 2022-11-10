@@ -14,6 +14,7 @@ import java.util.List;
 public interface WarningService {
     boolean addWarning(Rule warning);
     List<Rule> getWarnings();
+    List<String> getWarning();
     boolean deleteWarning(String content);
     int countWarning();
 }

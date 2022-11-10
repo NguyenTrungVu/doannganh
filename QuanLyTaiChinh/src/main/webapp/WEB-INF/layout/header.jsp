@@ -21,7 +21,7 @@
 
                 </li>
 
-                
+
 
                 <c:if test="${pageContext.request.userPrincipal.name == null}">
                     <li class="nav-item">
@@ -50,6 +50,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value="/logout" />">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="<c:url value="/warning" />">Warning <span class="badge bg-success">${countWarning}</span></a>
                     </li>
                 </c:if>
 

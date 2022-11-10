@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -32,16 +34,17 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Rule.findByContent", query = "SELECT r FROM Rule r WHERE r.content = :content")})
 public class Rule implements Serializable {
 
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private User userId;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "user_id")
-    private int userId;
+   
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
@@ -55,7 +58,7 @@ public class Rule implements Serializable {
         this.id = id;
     }
 
-    public Rule(Integer id, int userId, String content) {
+    public Rule(Integer id, User userId, String content) {
         this.id = id;
         this.userId = userId;
         this.content = content;
@@ -69,13 +72,7 @@ public class Rule implements Serializable {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+   
 
     public String getContent() {
         return content;
@@ -108,6 +105,14 @@ public class Rule implements Serializable {
     @Override
     public String toString() {
         return "com.ntv.pojo.Rule[ id=" + id + " ]";
+    }
+
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
     
 }
